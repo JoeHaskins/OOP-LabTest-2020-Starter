@@ -42,5 +42,10 @@ public class Task
         this.end = end;
     }
 
+    @Override
+    public String toString() {
+        return "Task [end=" + end + ", start=" + start + ", task=" + task + "]";
+    }
+
     
 }
