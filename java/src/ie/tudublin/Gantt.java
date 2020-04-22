@@ -32,7 +32,27 @@ public class Gantt extends PApplet
 	}
 
 	public void displayTasks() {
-		//float y = map(i, 0, task.size(), border, height-border)
+		int gradiant = 30;
+		float xborder = width * 0.20f;
+		float yborder = height * 0.05f;
+		int counter = 1;
+
+		stroke(255);
+		for (int i = 0; i < gradiant; i++) {
+			float x = map(i, 0, gradiant+1, xborder, width);
+			line(x, yborder, x, height-yborder);
+			textAlign(LEFT, CENTER);
+			text(counter, x-4, yborder/2);
+			counter++;
+		}
+
+		/*for (int j = 0; j < task.size(); j++) {
+			Task t = task.get(j);
+			float y = map(j, 0, task.size(), yborder, height-yborder);
+			fill(255);
+			rect(xborder, y, c, d);
+		}*/
+		
 	}
 	
 	public void mousePressed()
@@ -56,18 +76,6 @@ public class Gantt extends PApplet
 	public void draw()
 	{			
 		background(0);
-		int gradiant = 30;
-		float xborder = width * 0.20f;
-		float yborder = height * 0.05f;
-		int counter = 1;
-
-		stroke(255);
-		for (int i = 0; i < gradiant; i++) {
-			float x = map(i, 0, gradiant+1, xborder, width);
-			line(x, yborder, x, height-yborder);
-			textAlign(LEFT, CENTER);
-			text(counter, x-4, yborder/2);
-			counter++;
-		}
+		displayTasks();
 	}
 }
