@@ -9,6 +9,7 @@ import processing.data.TableRow;
 public class Gantt extends PApplet
 {	
 	ArrayList<Task> task = new ArrayList<Task>();
+	float mouseXpress;
 
 	public void settings()
 	{
@@ -62,7 +63,32 @@ public class Gantt extends PApplet
 			Task t = task.get(j);
 			float gap = ((height - yborder*2) / task.size()) * 0.85f;
 			float y = map(j, 0, task.size(), yborder*2, height-yborder);
-			rect(gradArray[t.getStart()-1], y, gradArray[(t.getEnd())-1]-gradArray[t.getStart()-1], gap, 5);
+			float xstart = gradArray[t.getStart()-1];
+			float xend = gradArray[(t.getEnd())-1];
+			float xgap = (width -xborder) /31;
+
+
+			if (mouseXpress >= xstart && mouseXpress <= xstart +20 && mouseY > y && mouseY < y + gap) {
+				
+				if (mouseX>= xborder && mouseX <= xstart - xgap) {
+					t.setStart((t.getStart()-1));
+				} else if (mouseX>= xborder && mouseX >= xstart + xgap){
+					t.setStart((t.getStart()+1));
+				}
+
+			} else if (mouseXpress <= xend && mouseXpress >= xend -20 && mouseY > y && mouseY < y + gap) {
+
+				if (mouseX> xborder && mouseX <= xend - xgap) {
+					t.setEnd((t.getEnd()-1));
+				} else if (mouseX> xborder && mouseX >= xend + xgap){
+					t.setEnd((t.getEnd()+1));
+				}
+
+			} 
+				xstart = gradArray[t.getStart()-1];
+				xend = gradArray[(t.getEnd())-1];
+				rect(xstart, y, xend-xstart, gap, 5);
+			
 
 			fill(255);
 			textAlign(LEFT, CENTER);
@@ -74,11 +100,13 @@ public class Gantt extends PApplet
 	public void mousePressed()
 	{
 		println("Mouse pressed");	
+		mouseXpress = mouseX;
 	}
 
 	public void mouseDragged()
 	{
 		println("Mouse dragged");
+		displayTasks();
 	}
 
 	
