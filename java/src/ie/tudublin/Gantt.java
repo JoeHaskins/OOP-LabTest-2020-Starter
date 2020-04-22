@@ -36,8 +36,10 @@ public class Gantt extends PApplet
 		float xborder = width * 0.20f;
 		float yborder = height * 0.05f;
 		int counter = 1;
+		float gradArray[] = new float[31];
 
 		stroke(255);
+		fill(255);
 		for (int i = 0; i < gradiant; i++) {
 			float x = map(i, 0, gradiant+1, xborder, width);
 			line(x, yborder, x, height-yborder);
@@ -46,12 +48,26 @@ public class Gantt extends PApplet
 			counter++;
 		}
 
-		/*for (int j = 0; j < task.size(); j++) {
+		for (int i = 0; i < gradiant; i++) {
+			float x = map(i, 0, gradiant+1, xborder, width);
+			
+			gradArray[i] = x;
+		}
+
+		colorMode(HSB);
+		for (int j = 0; j < task.size(); j++) {
+			float h = map(j, 0, task.size(), 0, 255);
+			stroke(0);
+			fill(h,255,255);
 			Task t = task.get(j);
-			float y = map(j, 0, task.size(), yborder, height-yborder);
+			float gap = ((height - yborder*2) / task.size()) * 0.85f;
+			float y = map(j, 0, task.size(), yborder*2, height-yborder);
+			rect(gradArray[t.getStart()-1], y, gradArray[(t.getEnd())-1]-gradArray[t.getStart()-1], gap, 5);
+
 			fill(255);
-			rect(xborder, y, c, d);
-		}*/
+			textAlign(LEFT, CENTER);
+			text(t.getTask(), xborder/3, y + gap/2);
+		}
 		
 	}
 	
