@@ -89,15 +89,15 @@ public class Gantt extends PApplet
 				
 				if (mouseX>= xborder && mouseX <= xstart - xgap) {
 					t.setStart((t.getStart()-1));
-				} else if (mouseX>= xborder && mouseX >= xstart + xgap && xend - xstart > xgap){
+				} else if (mouseX>= xborder && mouseX >= xstart + xgap && xstart + xgap != xend){
 					t.setStart((t.getStart()+1));
 				}
 
 			} else if (mousePosend == true && mouseYpress > y && mouseYpress < y + gap ) {
 
-				if (mouseX>= xborder && mouseX <= xend - xgap &&  xend - xstart > xgap) {
+				if (mouseX>= xborder && mouseX <= xend - xgap &&  xend -xgap != xstart) {
 					t.setEnd((t.getEnd()-1));
-				} else if (mouseX>= xborder && mouseX >= xend + xgap){
+				} else if (mouseX>= xborder && mouseX >= xend + xgap && mouseX < width-xgap){
 					t.setEnd((t.getEnd()+1));
 				}
 
@@ -125,13 +125,13 @@ public class Gantt extends PApplet
 		if (countmouse > 1) {
 			countmouse = 0;
 		}
-		
+		displayTasks();
 	}
 
 	public void mouseDragged()
 	{
 		println("Mouse dragged");
-		displayTasks();
+		
 	}
 
 	
