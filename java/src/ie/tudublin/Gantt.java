@@ -56,5 +56,16 @@ public class Gantt extends PApplet
 	public void draw()
 	{			
 		background(0);
+		int x = width/40;
+		int y = height/25;
+		int counter = 1;
+
+		stroke(255);
+		for (int i = 9; i < 39; i++) {
+			line(i*x, y, i*x, height-y);
+			textAlign(LEFT, CENTER);
+			text(counter, i*x-(width/150), y/2);
+			counter++;
+		}
 	}
 }
