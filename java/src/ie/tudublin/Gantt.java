@@ -10,6 +10,10 @@ public class Gantt extends PApplet
 {	
 	ArrayList<Task> task = new ArrayList<Task>();
 	float mouseXpress;
+	float mouseYpress;
+	boolean mousePosend = false;
+	boolean mousePosstart = false;
+	int countmouse = 0;
 
 	public void settings()
 	{
@@ -67,20 +71,33 @@ public class Gantt extends PApplet
 			float xend = gradArray[(t.getEnd())-1];
 			float xgap = (width -xborder) /31;
 
+			if (countmouse == 1) {
+				
+				if (mousePosend != true) {
+					if ( mouseXpress <= xend && mouseXpress >= xend -20 ) {
+						mousePosend = true;
+					} 
+				}
+				if (mousePosstart != true) {
+					if (mouseXpress >= xstart && mouseXpress <= xstart +20  ) {
+						mousePosstart = true;
+					} 
+				}
+			}
 
-			if (mouseXpress >= xstart && mouseXpress <= xstart +20 && mouseY > y && mouseY < y + gap) {
+			if (mousePosstart == true && mouseYpress > y && mouseYpress < y + gap ) {
 				
 				if (mouseX>= xborder && mouseX <= xstart - xgap) {
 					t.setStart((t.getStart()-1));
-				} else if (mouseX>= xborder && mouseX >= xstart + xgap){
+				} else if (mouseX>= xborder && mouseX >= xstart + xgap && xend - xstart > xgap){
 					t.setStart((t.getStart()+1));
 				}
 
-			} else if (mouseXpress <= xend && mouseXpress >= xend -20 && mouseY > y && mouseY < y + gap) {
+			} else if (mousePosend == true && mouseYpress > y && mouseYpress < y + gap ) {
 
-				if (mouseX> xborder && mouseX <= xend - xgap) {
+				if (mouseX>= xborder && mouseX <= xend - xgap &&  xend - xstart > xgap) {
 					t.setEnd((t.getEnd()-1));
-				} else if (mouseX> xborder && mouseX >= xend + xgap){
+				} else if (mouseX>= xborder && mouseX >= xend + xgap){
 					t.setEnd((t.getEnd()+1));
 				}
 
@@ -101,6 +118,14 @@ public class Gantt extends PApplet
 	{
 		println("Mouse pressed");	
 		mouseXpress = mouseX;
+		mouseYpress = mouseY;
+		mousePosend = false;
+		mousePosstart = false;
+		countmouse++;
+		if (countmouse > 1) {
+			countmouse = 0;
+		}
+		
 	}
 
 	public void mouseDragged()
